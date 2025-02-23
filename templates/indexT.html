@@ -1,0 +1,172 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+	<meta charset="UTF-8"> 
+	<title>Deep Stego App</title> 
+	<style> 
+		header {
+			background-color: #333;
+			padding: 20px;
+    		display: flex;
+    		justify-content: space-between;
+    		align-items: center;
+    		height: 80px;
+		}
+
+        .header-buttons {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-button {
+            background-color: #fff;
+            color: #333;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-right: 10px; /* Add margin between buttons */
+        }
+
+        .header-button:last-child {
+            margin-right: 0; /* Remove margin from the last button */
+        }
+
+        .header-button:hover {
+            background-color: #ddd;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #fff;
+            margin: 0;
+            flex-grow: 1; /* Allow the heading to grow and take up remaining space */
+            text-align: center; /* Center the heading */
+        }
+
+        /* Resetting default margins and paddings */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styles */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        /* Form styles */
+        form {
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        label {
+            display: inline-block;
+            margin-top: 10px;
+            width: 150px;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .image-preview {
+            width: 100px;
+            height: auto;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        /* Main styles */
+        main {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .upload-section {
+            margin-bottom: 20px;
+        }
+
+        .submit-section {
+            margin-top: 20px;
+        }
+
+        .button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        .main-button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 20px 40px; /* Increase padding */
+            border-radius: 10px; /* Increase border radius */
+            cursor: pointer;
+            font-size: 20px; /* Increase font size */
+            margin-top: 10px; /* Reduce margin to separate from image */
+            transition: background-color 0.3s; /* Add transition effect */
+        }
+
+        .main-button:hover {
+            background-color: #555; /* Change background color on hover */
+        }
+    </style> 
+</head> 
+<body> 
+	<header>
+        <h1>Welcome to Deep Stego App</h1> 
+    </header>
+	<main>
+	<p> 
+		Upload the secret and cover images:
+    </p> 
+	<form action = "/" method = "POST" enctype = "multipart/form-data"> 
+		<div class="upload-section">
+            <label for="upload1">Secret Image:</label>
+            <input type="file" id="upload1" accept="image/*" name="secret" onchange="previewImage(event, 'preview1')">
+            <img id="preview1" class="image-preview" src="#" alt="Preview 1">
+    
+            <label for="upload2">Cover Image:</label>
+            <input type="file" id="upload2" accept="image/*" name="cover" onchange="previewImage(event, 'preview2')">
+            <img id="preview2" class="image-preview" src="#" alt="Preview 2">
+        </div>
+		<br> 
+		Select a Function: 
+		<input type="radio" name="function" value="steganography" >steganography 
+		<input type="radio" name="function" value="steganalysis">steganalysis
+		<br> 
+		<input class=main-button type = "submit"/> 
+	</form> 
+        <img src="{{ url_for('static', filename=return_image) }}" alt="Image" style="width: 15%; height: auto;">
+	</main>
+	<script>
+		function previewImage(event, previewId) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const preview = document.getElementById(previewId);
+                preview.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+	</script>
+
+</body> 
+</html>

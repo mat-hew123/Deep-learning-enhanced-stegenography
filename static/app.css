@@ -1,0 +1,124 @@
+header {
+    background-color: #333;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+}
+
+.header-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.header-button {
+    background-color: #fff;
+    color: #333;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-right: 10px; /* Add margin between buttons */
+}
+
+.header-button:last-child {
+    margin-right: 0; /* Remove margin from the last button */
+}
+
+.header-button:hover {
+    background-color: #ddd;
+}
+
+h1 {
+    font-size: 24px;
+    color: #fff;
+    margin: 0;
+    flex-grow: 1; /* Allow the heading to grow and take up remaining space */
+    text-align: center; /* Center the heading */
+}
+
+/* Resetting default margins and paddings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Form styles */
+form {
+    margin: 20px auto;
+    text-align: center;
+}
+
+label {
+    display: inline-block;
+    margin-top: 10px;
+    width: 150px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.image-preview {
+    width: 100px;
+    height: auto;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+/* Main styles */
+main {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.upload-section {
+    margin-bottom: 20px;
+}
+
+.submit-section {
+    margin-top: 20px;
+}
+
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #45a049;
+}
+
+.main-button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 20px 40px; /* Increase padding */
+    border-radius: 10px; /* Increase border radius */
+    cursor: pointer;
+    font-size: 20px; /* Increase font size */
+    margin-top: 10px; /* Reduce margin to separate from image */
+    transition: background-color 0.3s; /* Add transition effect */
+}
+
+.main-button:hover {
+    background-color: #555; /* Change background color on hover */
+}

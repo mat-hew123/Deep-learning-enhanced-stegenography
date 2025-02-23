@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Stego App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+</head>
+<body>
+
+    <header>
+        <button class="header-button" onclick="window.location.href='/'">Home</button>
+        <h1>Welcome to Deep Stego App</h1> 
+    </header>
+    
+    <main>
+	<p> 
+		Upload the secret and cover images:
+    </p> 
+    <form action="/submit" method="POST" enctype="multipart/form-data" id="upload-form">
+        <div class="upload-section">
+            <label for="upload1">Secret Image:</label>
+            <input type="file" id="upload1" accept="image/*" name="secret" onchange="previewImage(event, 'preview1')">
+            <img id="preview1" class="image-preview" src="#" alt="Preview 1">
+    
+            <label for="upload2">Cover Image:</label>
+            <input type="file" id="upload2" accept="image/*" name="cover" onchange="previewImage(event, 'preview2')">
+            <img id="preview2" class="image-preview" src="#" alt="Preview 2">
+        </div>
+        
+        <div class="submit-section">
+            <input class="main-button" type="submit">
+            <span id="submit-status"></span> <!-- Display success text here -->
+        </div>
+    </form>
+    {% if success %}
+        <p>Success</p>
+    {% endif %}
+    <div class="result-section">
+        <label for="image-options">Select Image Type:</label>
+        <select id="image-options" onchange="displayImage(steg, dec)">
+            <option value="encoded">Encoded Image</option>
+            <option value="decoded">Decoded Image</option>
+        </select>
+        <div id="result-image"></div>
+    </div>
+
+    <button class="main-button" onclick="clearUploads()">New</button>
+    </main>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function previewImage(event, previewId) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const preview = document.getElementById(previewId);
+                preview.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    
+
+        $(document).ready(function() {
+            var steg, dec; // Define steg and dec variables outside the scope of AJAX success function
+            
+            $('#upload-form').submit(function(event) {
+                event.preventDefault(); // Prevent the default form submission behavior
+                
+                var formData = new FormData(this); // Get form data
+                
+                $.ajax({
+                    url: '/submit',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.success) {
+                            // Display success message or update page content
+                            $('#submit-status').text('Success');
+                            // Assign stego_img_path and decoded_img_path to steg and dec variables
+                            steg = response.stego_img_path;
+                            dec = response.decoded_img_path;
+                            // Call displayImage function
+                            displayImage();
+                        } else {
+                            // Display error message or handle other cases
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle errors
+                        console.error(error);
+                    }
+                });
+            });
+        });
+        
+        function displayImage() {
+            console.log("Stego Image Path:", steg);
+            console.log("Decoded Image Path:", dec);
+            
+            var selectedOption = document.getElementById("image-options").value;
+            var imageUrl = "";
+            
+            if (selectedOption === "encoded") {
+                imageUrl = steg;
+            } else {
+                imageUrl = dec;
+            }
+            
+            // Update the content of the element with id "result-image" to display the image URL
+            document.getElementById("result-image").innerHTML = '<img src="' + imageUrl + '" alt="Result Image">';
+            
+            // Log the image URL to the console
+            console.log("Image URL:", imageUrl);
+        }
+
+        function clearUploads() {
+            document.getElementById("upload-form").reset();
+            document.getElementById("preview1").src = "#";
+            document.getElementById("preview2").src = "#";
+            document.getElementById("result-image").innerHTML = "";
+        }
+
+    </script>
+
+</body>
+</html>

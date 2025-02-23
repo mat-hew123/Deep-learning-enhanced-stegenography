@@ -1,0 +1,112 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+	<meta charset="UTF-8"> 
+	<title>Deep Stego App</title> 
+	<style> 
+		*{ 
+			box-sizing: border-box; 
+			margin: 0%; 
+			padding: 0%; 
+		} 
+
+		header, form, main{ 
+			margin: auto; 
+			width: 70%; 
+			font-family: Helvetica; 
+			padding: 1.1rem 1.2rem; 
+		} 
+
+		header > h1{ 
+			font-size: 2.5rem; 
+			margin-bottom: 20px; 
+		} 
+
+		header > p{ 
+			color: gray; 
+			font-size: 1.2rem; 
+		} 
+
+		form{ 
+			background-color: skyblue; 
+		} 
+
+		input{ 
+			margin: 10px 0; 
+		} 
+
+		input[type='submit'], input[type='file']{ 
+			font-size: 1.2rem; 
+		} 
+
+		input:hover{ 
+			cursor: pointer; 
+		} 
+
+		input[type='submit']{ 
+			padding: 0.5rem 0.8rem; 
+			border: 2px solid #003333; 
+			background-color: #003333; 
+			color: white; 
+			border-radius: 4px; 
+		} 
+
+		main{ 
+			padding: 0; 
+		} 
+
+		.pair{ 
+			width: 100%; 
+			display: flex; 
+			margin: auto; 
+			align-items: center; 
+		} 
+		.pair > .color-box{ 
+			width: 50%; 
+			height: 50px; 
+			border: 1px solid black; 
+			text-align: center; 
+			padding: 1.1%; 
+			margin: 0; 
+		} 
+		.pair > .color-box-value{ 
+			width: 50%; 
+			height: 50px; 
+			border: 1px solid black; 
+			text-align: center; 
+			padding: 1.1%; 
+			margin: 0; 
+		} 
+	</style> 
+</head> 
+<body> 
+	<header> 
+		<h1>Welcome to Deep Stego App</h1> 
+		<p> 
+			Upload the secret and cover images and this site will help to hide your secret message for confidentiality.
+        </p> 
+	</header> 
+	<form action = "/" method = "POST" enctype = "multipart/form-data"> 
+	    <div class="upload-section">
+            <label for="upload1">Secret Image:</label>
+            <input type="file" id="upload1" accept="image/*" name="secret" onchange="previewImage(event, 'preview1')">
+            <img id="preview1" class="image-preview" src="#" alt="Preview 1">
+    
+            <label for="upload2">Cover Image:</label>
+            <input type="file" id="upload2" accept="image/*" name="cover" onchange="previewImage(event, 'preview2')">
+            <img id="preview2" class="image-preview" src="#" alt="Preview 2">
+        </div>
+		<br> 
+		Select a Function: 
+		<input type="radio" name="function" value="steganography" >steganography 
+		<input type="radio" name="function" value="steganalysis">steganalysis
+		<br> 
+		<input type = "submit"/> 
+	</form> 
+	<main>
+        <img src="{{ url_for('static', filename=return_image) }}" alt="Image" style="width: 15%; height: auto;">
+	</main>
+	
+
+</body> 
+</html>
